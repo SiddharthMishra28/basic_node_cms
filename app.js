@@ -25,13 +25,13 @@ const swaggerOptions = {
     swaggerDefinition: {
         openapi: '3.0.0',
         info: {
-            title: 'Corporate Company Website CMS API',
+            title: 'WEB CMS API',
             version: '1.0.0',
-            description: 'API documentation for the Corporate Company Website CMS',
+            description: 'API documentation for Web CMS',
         },
         servers: [
             {
-                url: 'http://localhost:3000/api',
+                url: '/',
             },
         ],
     },
@@ -68,7 +68,4 @@ app.use((err, req, res, next) => {
     });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+module.exports = app;

@@ -151,6 +151,13 @@ My project follows below folder structure to implement all api routes.
 
 /cms-api
 │
+|
+|___functions
+|   |__ expressApp.js  # serverless wrapper for express app to divert requests to app.js
+|
+|
+|__ netlify.toml
+|
 ├── /config            # Configuration files (e.g., database, environment variables)
 │   └── db.js          # Database connection using MySQL2
 │   └── auth.js        # Authentication middleware configuration
@@ -245,9 +252,6 @@ My project follows below folder structure to implement all api routes.
 └── README.md          # Documentation for the project
 
 
-Please provide implementation for below routes. Do provide code for each applicable file (like controller, service, route, model etc) inside the folder as per provided structure.
-Please write appropriate swagger comments for the routes file with proper examples
-
 FYI I am using only below dependencies
 
     "bcryptjs": "^2.4.3",
@@ -261,14 +265,78 @@ FYI I am using only below dependencies
     "swagger-ui-express": "^5.0.1",
     "winston": "^3.15.0"
 
-could you please implement a route which includes below details for rendering an entire page along with its contents and data in a single api response ?
-1. Logo from media table
-2. Menu and Menu Items with all URLs for a theme or page provided
-3. Section in that page
-4. links within each section nested for easy rendering
-5. Custom css for each section or page as applicable
-6. forms for the page
-7. Any other details from a tables
+After I implemented serverless wrapper, everything works but the swagger docs endpoint which was earlier
+working stopped working. Now on localhost:8888/api/api-docs I get {"message":"No token provided"}
 
-Please consider null values which could arise and needs handling accordingly.
-Think that you will use the response and its data to render a customized front end webpage using some javascript framework.
+Below is my app.js
+// app.js
+const express = require('express');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const themeRoutes = require('./routes/themeRoutes');
+const pageRoutes = require('./routes/pageRoutes');
+const sectionRoutes = require('./routes/sectionRoutes');
+const mediaRoutes = require('./routes/mediaRoutes'); 
+const menuRoutes = require('./routes/menuRoutes');
+const settingsRoutes = require('./routes/settingsRoutes');
+const customStyleRoutes = require('./routes/customStyleRoutes');
+const formRoutes = require('./routes/formRoutes');
+const hyperlinkRoutes = require('./routes/hyperlinkRoutes');
+const auditLogRoutes = require('./routes/auditLogRoutes');
+const renderRoutes = require('./routes/renderRoutes');
+const logger = require('./config/logger');
+
+const app = express();
+app.use(express.json());
+
+// Swagger configuration
+const swaggerOptions = {
+    swaggerDefinition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'WEB CMS API',
+            version: '1.0.0',
+            description: 'API documentation for Web CMS',
+        },
+        servers: [
+            {
+                url: '/',
+            },
+        ],
+    },
+    apis: ['./routes/*.js'], // Path to the API docs
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+// Routes
+app.use('/api', authRoutes);
+app.use('/api', userRoutes);
+app.use('/api', themeRoutes);
+app.use('/api', pageRoutes);
+app.use('/api', sectionRoutes);
+app.use('/api', mediaRoutes);
+app.use('/api', menuRoutes);
+app.use('/api', settingsRoutes);
+app.use('/api', customStyleRoutes);
+app.use('/api', formRoutes);
+app.use('/api', hyperlinkRoutes);
+app.use('/api', auditLogRoutes);
+app.use('/api', renderRoutes);
+
+// Global error-handling middleware
+app.use((err, req, res, next) => {
+    // Log the error details using winston
+    logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+    
+    // Send generic error response to the client
+    res.status(err.status || 500).json({
+        message: err.message || 'Internal Server Error',
+        status: err.status || 500
+    });
+});
+
+module.exports = app;

@@ -1,5 +1,9 @@
 /cms-api
 │
+|
+|___functions
+|   |__ expressApp.js  # serverless wrapper for express app to divert requests to app.js
+|
 ├── /config            # Configuration files (e.g., database, environment variables)
 │   └── db.js          # Database connection using MySQL2
 │   └── auth.js        # Authentication middleware configuration

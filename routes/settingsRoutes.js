@@ -14,7 +14,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/settings:
+ * /settings:
  *   get:
  *     summary: Get all settings
  *     tags: [Settings]
@@ -43,7 +43,7 @@ router.get('/settings', authMiddleware, roleMiddleware(['admin']), getAllSetting
 
 /**
  * @swagger
- * /api/settings/{key}:
+ * /settings/{key}:
  *   put:
  *     summary: Update a setting by its key
  *     tags: [Settings]
@@ -77,7 +77,7 @@ router.put('/settings/:key', authMiddleware, roleMiddleware(['admin']), updateSe
 
 /**
  * @swagger
- * /api/settings:
+ * /settings:
  *   post:
  *     summary: Create a new setting
  *     tags: [Settings]

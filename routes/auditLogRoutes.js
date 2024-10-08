@@ -5,7 +5,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 
 /**
  * @swagger
- * /api/audit-logs:
+ * /audit-logs:
  *   get:
  *     summary: Get all audit logs
  *     tags: [Audit Logs]
@@ -46,7 +46,7 @@ router.get('/', authMiddleware, auditLogController.getAllAuditLogs);
 
 /**
  * @swagger
- * /api/audit-logs/{id}:
+ * /audit-logs/{id}:
  *   get:
  *     summary: Get a specific audit log by ID
  *     tags: [Audit Logs]

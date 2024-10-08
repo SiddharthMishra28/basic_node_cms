@@ -1,0 +1,88 @@
+User Authentication & Management
+POST /api/auth/register: Register a new user.
+POST /api/auth/login: Log in to the system.
+GET /api/users: Get a list of users (Admin).
+GET /api/users/{id}: Get details of a specific user (Admin).
+PUT /api/users/{id}: Update user information (Admin).
+DELETE /api/users/{id}: Delete a user (Admin).
+
+Theme Management
+GET /api/themes: Get a list of themes.
+POST /api/themes: Create a new theme (Admin).
+PUT /api/themes/{id}: Update an existing theme (Admin).
+DELETE /api/themes/{id}: Delete a theme (Admin).
+PATCH /api/themes/{id}/status: Change the status (active/inactive) of a theme (Admin).
+
+Page Management
+GET /api/pages: Get a list of all pages.
+GET /api/pages/{slug}: Get a single page by slug (for public viewing).
+POST /api/pages: Create a new page (Admin/Editor).
+PUT /api/pages/{id}: Update an existing page (Admin/Editor).
+DELETE /api/pages/{id}: Delete a page (Admin).
+
+Section Management
+GET /api/pages/{pageId}/sections: Get all sections for a specific page.
+POST /api/pages/{pageId}/sections: Create a new section for a page (Admin/Editor).
+PUT /api/pages/{pageId}/sections/{id}: Update a section in a page (Admin/Editor).
+DELETE /api/pages/{pageId}/sections/{id}: Delete a section from a page (Admin/Editor).
+
+Media Management
+GET /api/media: Get a list of all media.
+GET /api/media/{id}: Get a specific media file.
+POST /api/media/upload: Upload a new media file (Admin/Editor).
+Body Parameters:
+file: The media file to upload.
+section_id: (optional) The ID of the section to associate the media with.
+page_id: (optional) The ID of the page to associate the media with.
+DELETE /api/media/{id}: Delete a media file (Admin).
+
+Menu & Navigation Management
+GET /api/menus: Get all menus (Admin).
+POST /api/menus: Create a new menu (Admin).
+PUT /api/menus/{id}: Update an existing menu (Admin).
+DELETE /api/menus/{id}: Delete a menu (Admin).
+GET /api/menus/{menuId}/items: Get all items for a specific menu.
+POST /api/menus/{menuId}/items: Add an item to a menu (Admin).
+PUT /api/menus/{menuId}/items/{itemId}: Update a menu item (Admin).
+DELETE /api/menus/{menuId}/items/{itemId}: Delete a menu item (Admin).
+
+Settings Management
+GET /api/settings: Get all settings (Admin).
+PUT /api/settings/{key}: Update a setting by its key (Admin).
+
+Custom Styles
+GET /api/custom-styles: Get all custom styles.
+POST /api/custom-styles: Add custom styles (Admin).
+PUT /api/custom-styles/{id}: Update custom styles (Admin).
+DELETE /api/custom-styles/{id}: Delete custom styles (Admin).
+
+Form Management
+GET /api/forms: Get all forms.
+POST /api/forms: Create a new form (Admin/Editor).
+PUT /api/forms/{id}: Update an existing form (Admin/Editor).
+DELETE /api/forms/{id}: Delete a form (Admin).
+GET /api/forms/{formId}/fields: Get all fields for a specific form.
+POST /api/forms/{formId}/fields: Add a new field to a form (Admin/Editor).
+DELETE /api/forms/{formId}/fields/{fieldId}: Remove a field from a form (Admin/Editor).
+POST /api/forms/{formId}/submit: Submit a form (User).
+GET /api/forms/{formId}/submissions: Get all submissions for a specific form (Admin).
+GET /api/forms/submissions/{submissionId}: Get details of a specific submission (Admin).
+
+Hyperlinks
+GET /api/pages/{pageId}/sections/{sectionId}/links: Get all hyperlinks for a specific section.
+POST /api/pages/{pageId}/sections/{sectionId}/links: Create a new hyperlink in a section (Admin/Editor).
+DELETE /api/pages/{pageId}/sections/{sectionId}/links/{linkId}: Delete a hyperlink from a section (Admin).
+
+Audit Logs
+GET /api/audit-logs: Get all audit logs (Admin).
+GET /api/audit-logs/{id}: Get a specific audit log (Admin).
+
+Website Performance & Analytics
+GET /api/analytics/traffic: Get website traffic analytics.
+GET /api/analytics/visitors: Get visitor statistics (daily, weekly, monthly).
+GET /api/analytics/performance: Get page load times and performance metrics.
+GET /api/analytics/error-logs: Get server-side error logs and details.
+
+Additional Suggestions
+POST /api/cache/clear: Clear website cache (Admin).
+GET /api/backup: Trigger a database or media backup (Admin).

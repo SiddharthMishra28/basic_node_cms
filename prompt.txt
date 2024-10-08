@@ -1,0 +1,274 @@
+Below is the mysql schema for my corporate company website CMS
+
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
+    role ENUM('admin', 'editor', 'viewer') DEFAULT 'viewer',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE themes (
+    theme_id INT AUTO_INCREMENT PRIMARY KEY,
+    theme_name VARCHAR(255) NOT NULL,
+    primary_color VARCHAR(7),
+    secondary_color VARCHAR(7),
+    font_family VARCHAR(255),
+    font_size VARCHAR(50),
+    status ENUM('active', 'inactive') DEFAULT 'inactive'
+);
+
+CREATE TABLE pages (
+    page_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    slug VARCHAR(255) UNIQUE,
+    content TEXT,
+    meta_description VARCHAR(255),
+    meta_keywords VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_published BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE sections (
+    section_id INT AUTO_INCREMENT PRIMARY KEY,
+    section_type ENUM('header', 'footer', 'content', 'sidebar', 'banner', 'carousel', 'contact_form') NOT NULL,
+    content TEXT,
+    page_id INT,
+    theme_id INT,
+    position INT,
+    FOREIGN KEY (page_id) REFERENCES pages(page_id) ON DELETE CASCADE,
+    FOREIGN KEY (theme_id) REFERENCES themes(theme_id) ON DELETE SET NULL
+);
+
+CREATE TABLE media (
+    media_id INT AUTO_INCREMENT PRIMARY KEY,
+    file_name VARCHAR(255) NOT NULL,
+    file_path VARCHAR(255) NOT NULL,
+    media_type ENUM('image', 'video', 'document') NOT NULL,
+    description VARCHAR(255),
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    section_id INT DEFAULT NULL,
+    page_id INT DEFAULT NULL,
+    FOREIGN KEY (section_id) REFERENCES sections(section_id) ON DELETE CASCADE,
+    FOREIGN KEY (page_id) REFERENCES pages(page_id) ON DELETE CASCADE
+);
+
+CREATE TABLE menus (
+    menu_id INT AUTO_INCREMENT PRIMARY KEY,
+    menu_name VARCHAR(255) NOT NULL,
+    menu_position ENUM('header', 'footer', 'sidebar') NOT NULL,
+    theme_id INT,
+    FOREIGN KEY (theme_id) REFERENCES themes(theme_id) ON DELETE SET NULL
+);
+
+CREATE TABLE menu_items (
+    menu_item_id INT AUTO_INCREMENT PRIMARY KEY,
+    menu_id INT,
+    label VARCHAR(255),
+    url VARCHAR(255),
+    parent_id INT DEFAULT NULL,
+    position INT,
+    FOREIGN KEY (menu_id) REFERENCES menus(menu_id) ON DELETE CASCADE,
+    FOREIGN KEY (parent_id) REFERENCES menu_items(menu_item_id) ON DELETE SET NULL
+);
+
+CREATE TABLE settings (
+    setting_id INT AUTO_INCREMENT PRIMARY KEY,
+    setting_key VARCHAR(255) UNIQUE,
+    setting_value TEXT,
+    setting_type ENUM('text', 'number', 'boolean', 'json') DEFAULT 'text'
+);
+
+CREATE TABLE hyperlinks (
+    link_id INT AUTO_INCREMENT PRIMARY KEY,
+    label VARCHAR(255),
+    url VARCHAR(255),
+    target ENUM('_self', '_blank') DEFAULT '_self',
+    page_id INT,
+    section_id INT,
+    FOREIGN KEY (page_id) REFERENCES pages(page_id) ON DELETE CASCADE,
+    FOREIGN KEY (section_id) REFERENCES sections(section_id) ON DELETE CASCADE
+);
+
+CREATE TABLE custom_styles (
+    style_id INT AUTO_INCREMENT PRIMARY KEY,
+    css_code TEXT,
+    theme_id INT,
+    page_id INT DEFAULT NULL,
+    FOREIGN KEY (theme_id) REFERENCES themes(theme_id) ON DELETE CASCADE,
+    FOREIGN KEY (page_id) REFERENCES pages(page_id) ON DELETE SET NULL
+);
+
+CREATE TABLE forms (
+    form_id INT AUTO_INCREMENT PRIMARY KEY,
+    form_name VARCHAR(255) NOT NULL,
+    description TEXT,
+    page_id INT,  -- Add this line to relate forms to pages
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (page_id) REFERENCES pages(page_id) ON DELETE CASCADE -- Ensure it relates to pages
+)
+
+CREATE TABLE form_fields (
+    field_id INT AUTO_INCREMENT PRIMARY KEY,
+    form_id INT,
+    field_name VARCHAR(255) NOT NULL,
+    field_type ENUM('text', 'email', 'textarea', 'number', 'date') DEFAULT 'text',
+    is_required BOOLEAN DEFAULT FALSE,
+    position INT,
+    FOREIGN KEY (form_id) REFERENCES forms(form_id) ON DELETE CASCADE
+);
+
+CREATE TABLE form_submissions (
+    submission_id INT AUTO_INCREMENT PRIMARY KEY,
+    form_id INT,
+    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (form_id) REFERENCES forms(form_id) ON DELETE CASCADE
+);
+
+CREATE TABLE form_submission_data (
+    submission_data_id INT AUTO_INCREMENT PRIMARY KEY,
+    submission_id INT,
+    field_id INT,
+    field_value TEXT,
+    FOREIGN KEY (submission_id) REFERENCES form_submissions(submission_id) ON DELETE CASCADE,
+    FOREIGN KEY (field_id) REFERENCES form_fields(field_id) ON DELETE CASCADE
+);
+
+CREATE TABLE audit_logs (
+    log_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    action VARCHAR(255),
+    details TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+I am using expressjs with mysql2, dotenv to drive the api for my site 
+
+My project follows below folder structure to implement all api routes.
+
+/cms-api
+│
+├── /config            # Configuration files (e.g., database, environment variables)
+│   └── db.js          # Database connection using MySQL2
+│   └── auth.js        # Authentication middleware configuration
+│   └── logger.js      # Logger configuration (e.g., Winston)
+│
+├── /controllers       # Business logic for handling requests and responses
+│   └── authController.js
+│   └── userController.js
+│   └── themeController.js
+│   └── pageController.js
+│   └── sectionController.js
+│   └── mediaController.js
+│   └── menuController.js
+│   └── settingsController.js
+│   └── styleController.js
+│   └── formController.js
+│   └── hyperlinkController.js
+│   └── auditLogController.js
+│   └── analyticsController.js
+│
+├── /middlewares       # Middleware for authentication, error handling, validation
+│   └── authMiddleware.js
+│   └── errorHandler.js
+│   └── roleMiddleware.js
+│
+├── /models            # MySQL database models
+│   └── userModel.js
+│   └── themeModel.js
+│   └── pageModel.js
+│   └── sectionModel.js
+│   └── mediaModel.js
+│   └── menuModel.js
+│   └── settingModel.js
+│   └── styleModel.js
+│   └── formModel.js
+│   └── hyperlinkModel.js
+│   └── auditLogModel.js
+│   └── analyticsModel.js
+│
+├── /routes            # API route definitions
+│   └── authRoutes.js
+│   └── userRoutes.js
+│   └── themeRoutes.js
+│   └── pageRoutes.js
+│   └── sectionRoutes.js
+│   └── mediaRoutes.js
+│   └── menuRoutes.js
+│   └── settingsRoutes.js
+│   └── styleRoutes.js
+│   └── formRoutes.js
+│   └── hyperlinkRoutes.js
+│   └── auditLogRoutes.js
+│   └── analyticsRoutes.js
+│
+├── /services          # Application services (handle reusable business logic)
+│   └── authService.js
+│   └── userService.js
+│   └── themeService.js
+│   └── pageService.js
+│   └── sectionService.js
+│   └── mediaService.js
+│   └── menuService.js
+│   └── settingsService.js
+│   └── styleService.js
+│   └── formService.js
+│   └── hyperlinkService.js
+│   └── auditLogService.js
+│   └── analyticsService.js
+│
+├── /utils             # Utility functions and helpers (e.g., formatters, validators)
+│   └── emailValidator.js
+│   └── passwordHasher.js
+│   └── slugGenerator.js
+│
+├── /tests             # Unit and integration tests
+│   └── auth.test.js
+│   └── user.test.js
+│   └── theme.test.js
+│   └── page.test.js
+│   └── section.test.js
+│
+├── /docs              # API documentation (e.g., OpenAPI specs)
+│   └── openapi.yaml
+│
+├── /public            # Public static files (e.g., media, assets)
+│   └── uploads/
+│
+├── .env               # Environment variables (dotenv configuration)
+├── .gitignore         # Files to be ignored by Git
+├── app.js             # Application entry point
+├── package.json       # Node.js dependencies and scripts
+└── README.md          # Documentation for the project
+
+
+Please provide implementation for below routes. Do provide code for each applicable file (like controller, service, route, model etc) inside the folder as per provided structure.
+Please write appropriate swagger comments for the routes file with proper examples
+
+FYI I am using only below dependencies
+
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.11.3",
+    "serverless-http": "^3.2.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.15.0"
+
+could you please implement a route which includes below details for rendering an entire page along with its contents and data in a single api response ?
+1. Logo from media table
+2. Menu and Menu Items with all URLs for a theme or page provided
+3. Section in that page
+4. links within each section nested for easy rendering
+5. Custom css for each section or page as applicable
+6. forms for the page
+7. Any other details from a tables
+
+Please consider null values which could arise and needs handling accordingly.
+Think that you will use the response and its data to render a customized front end webpage using some javascript framework.

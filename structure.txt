@@ -1,0 +1,94 @@
+/cms-api
+│
+├── /config            # Configuration files (e.g., database, environment variables)
+│   └── db.js          # Database connection using MySQL2
+│   └── auth.js        # Authentication middleware configuration
+│   └── logger.js      # Logger configuration (e.g., Winston)
+│
+├── /controllers       # Business logic for handling requests and responses
+│   └── authController.js
+│   └── userController.js
+│   └── themeController.js
+│   └── pageController.js
+│   └── sectionController.js
+│   └── mediaController.js
+│   └── menuController.js
+│   └── settingsController.js
+│   └── styleController.js
+│   └── formController.js
+│   └── hyperlinkController.js
+│   └── auditLogController.js
+│   └── analyticsController.js
+│
+├── /middlewares       # Middleware for authentication, error handling, validation
+│   └── authMiddleware.js
+│   └── errorHandler.js
+│   └── roleMiddleware.js
+│
+├── /models            # MySQL database models
+│   └── userModel.js
+│   └── themeModel.js
+│   └── pageModel.js
+│   └── sectionModel.js
+│   └── mediaModel.js
+│   └── menuModel.js
+│   └── settingModel.js
+│   └── styleModel.js
+│   └── formModel.js
+│   └── hyperlinkModel.js
+│   └── auditLogModel.js
+│   └── analyticsModel.js
+│
+├── /routes            # API route definitions
+│   └── authRoutes.js
+│   └── userRoutes.js
+│   └── themeRoutes.js
+│   └── pageRoutes.js
+│   └── sectionRoutes.js
+│   └── mediaRoutes.js
+│   └── menuRoutes.js
+│   └── settingsRoutes.js
+│   └── styleRoutes.js
+│   └── formRoutes.js
+│   └── hyperlinkRoutes.js
+│   └── auditLogRoutes.js
+│   └── analyticsRoutes.js
+│
+├── /services          # Application services (handle reusable business logic)
+│   └── authService.js
+│   └── userService.js
+│   └── themeService.js
+│   └── pageService.js
+│   └── sectionService.js
+│   └── mediaService.js
+│   └── menuService.js
+│   └── settingsService.js
+│   └── styleService.js
+│   └── formService.js
+│   └── hyperlinkService.js
+│   └── auditLogService.js
+│   └── analyticsService.js
+│
+├── /utils             # Utility functions and helpers (e.g., formatters, validators)
+│   └── emailValidator.js
+│   └── passwordHasher.js
+│   └── slugGenerator.js
+│
+├── /tests             # Unit and integration tests
+│   └── auth.test.js
+│   └── user.test.js
+│   └── theme.test.js
+│   └── page.test.js
+│   └── section.test.js
+│
+├── /docs              # API documentation (e.g., OpenAPI specs)
+│   └── openapi.yaml
+│
+├── /public            # Public static files (e.g., media, assets)
+│   └── uploads/
+│
+├── .env               # Environment variables (dotenv configuration)
+├── .gitignore         # Files to be ignored by Git
+├── app.js             # Application entry point
+├── package.json       # Node.js dependencies and scripts
+└── README.md          # Documentation for the project

@@ -1,1 +1,0 @@
-2024-10-09 00:02:12 error: Error during user registration: Bind parameters must not contain undefined. To pass SQL NULL specify JS null

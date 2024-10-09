@@ -106,7 +106,7 @@ CREATE TABLE forms (
     page_id INT,  -- Add this line to relate forms to pages
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (page_id) REFERENCES pages(page_id) ON DELETE CASCADE -- Ensure it relates to pages
-)
+);
 
 CREATE TABLE form_fields (
     field_id INT AUTO_INCREMENT PRIMARY KEY,

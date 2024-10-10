@@ -1,7 +1,8 @@
-const express = require('express');
+import express from 'express';
+import auditLogController from '../controllers/auditLogController.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
+
 const router = express.Router();
-const auditLogController = require('../controllers/auditLogController');
-const authMiddleware = require('../middlewares/authMiddleware');
 
 /**
  * @swagger
@@ -93,4 +94,4 @@ router.get('/', authMiddleware, auditLogController.getAllAuditLogs);
  */
 router.get('/:id', authMiddleware, auditLogController.getAuditLogById);
 
-module.exports = router;
+export default router;

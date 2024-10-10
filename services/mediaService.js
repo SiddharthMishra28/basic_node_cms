@@ -1,5 +1,5 @@
-const mediaModel = require('../models/mediaModel');
-const sectionModel = require('../models/sectionModel');
+import mediaModel from '../models/mediaModel.js';
+import sectionModel from '../models/sectionModel.js';
 
 const mediaService = {
     uploadMedia: async (mediaData) => {
@@ -38,4 +38,4 @@ const mediaService = {
     },
 };
 
-module.exports = mediaService;
+export default mediaService;

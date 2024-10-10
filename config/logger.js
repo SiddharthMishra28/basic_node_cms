@@ -1,14 +1,25 @@
-// config/logger.js
+import { createLogger, format, transports } from 'winston';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
 
-const { createLogger, format, transports } = require('winston');
-const path = require('path');
+// Get the directory name of the current module
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Define the logs directory
+const logDir = path.join(__dirname,'../', 'logs');
+
+// Create logs directory if it doesn't exist
+if (!fs.existsSync(logDir)) {
+    fs.mkdirSync(logDir);
+}
 
 // Create a custom format for logs
 const logFormat = format.combine(
     format.timestamp({
-        format: 'YYYY-MM-DD HH:mm:ss'
+        format: 'YYYY-MM-DD HH:mm:ss',
     }),
-    format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`)
+    format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`)
 );
 
 // Define the logger configuration
@@ -17,7 +28,7 @@ const logger = createLogger({
     format: logFormat,
     transports: [
         // Write logs to a file
-        new transports.File({ filename: path.join(__dirname, '../logs/error.log'), level: 'error' }),
+        new transports.File({ filename: path.join(logDir, 'error.log'), level: 'error' }),
         // Console logging (optional)
         new transports.Console({
             format: format.combine(
@@ -28,12 +39,12 @@ const logger = createLogger({
     ],
     exceptionHandlers: [
         // Handle uncaught exceptions and log them
-        new transports.File({ filename: path.join(__dirname, '../logs/exceptions.log') })
+        new transports.File({ filename: path.join(logDir, 'exceptions.log') })
     ],
     rejectionHandlers: [
         // Handle unhandled promise rejections
-        new transports.File({ filename: path.join(__dirname, '../logs/rejections.log') })
+        new transports.File({ filename: path.join(logDir, 'rejections.log') })
     ]
 });
 
-module.exports = logger;
+export default logger;

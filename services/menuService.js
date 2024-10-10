@@ -1,4 +1,4 @@
-const Menu = require('../models/menuModel');
+import Menu from '../models/menuModel.js';
 
 const menuService = {
   getAllMenus: async () => {
@@ -36,4 +36,4 @@ const menuService = {
   }
 };
 
-module.exports = menuService;
+export default menuService;

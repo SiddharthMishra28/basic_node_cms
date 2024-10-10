@@ -1,8 +1,9 @@
-const express = require('express');
+import express from 'express';
+import formController from '../controllers/formController.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
+import roleMiddleware from '../middlewares/roleMiddleware.js';
+
 const router = express.Router();
-const formController = require('../controllers/formController');
-const authMiddleware = require('../middlewares/authMiddleware');
-const roleMiddleware = require('../middlewares/roleMiddleware');
 
 /**
  * @swagger
@@ -333,60 +334,22 @@ router.post('/forms/:formId/submit', formController.submitForm);
  *                 properties:
  *                   submission_id:
  *                     type: integer
+ *                     description: The submission ID
  *                   form_id:
  *                     type: integer
- *                   submitted_data:
- *                     type: object
+ *                     description: The ID of the form
  *                   submitted_at:
  *                     type: string
  *                     format: date-time
+ *                     description: The submission date and time
  *             example:
  *               - submission_id: 1
  *                 form_id: 1
- *                 submitted_data: { "email": "user@example.com", "message": "Hello!" }
- *                 submitted_at: "2024-10-07T12:30:00Z"
+ *                 submitted_at: "2024-10-08T14:12:00Z"
+ *               - submission_id: 2
+ *                 form_id: 1
+ *                 submitted_at: "2024-10-08T14:15:00Z"
  */
 router.get('/forms/:formId/submissions', authMiddleware, roleMiddleware(['admin', 'editor']), formController.getFormSubmissions);
 
-/**
- * @swagger
- * /forms/submissions/{submissionId}:
- *   get:
- *     summary: Get details of a specific submission
- *     tags: [Forms]
- *     security:
- *       - BearerAuth: []
- *     description: Get details of a specific form submission
- *     parameters:
- *       - in: path
- *         name: submissionId
- *         required: true
- *         schema:
- *           type: integer
- *         description: The submission ID
- *     responses:
- *       200:
- *         description: Submission details
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 submission_id:
- *                   type: integer
- *                 form_id:
- *                   type: integer
- *                 submitted_data:
- *                   type: object
- *                 submitted_at:
- *                   type: string
- *                   format: date-time
- *             example:
- *               submission_id: 1
- *               form_id: 1
- *               submitted_data: { "email": "user@example.com", "message": "Hello!" }
- *               submitted_at: "2024-10-07T12:30:00Z"
- */
-router.get('/forms/submissions/:submissionId', authMiddleware, roleMiddleware(['admin']), formController.getSubmissionDetails);
-
-module.exports = router;
+export default router;

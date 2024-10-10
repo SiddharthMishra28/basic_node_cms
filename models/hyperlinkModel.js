@@ -1,4 +1,4 @@
-const db = require('../config/db');
+import db from '../config/db.js';
 
 const Hyperlink = {
     getAllHyperlinks: async (sectionId) => {
@@ -22,4 +22,4 @@ const Hyperlink = {
     }
 };
 
-module.exports = Hyperlink;
+export default Hyperlink;

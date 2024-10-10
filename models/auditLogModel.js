@@ -1,4 +1,4 @@
-const db = require('../config/db');
+import db from '../config/db.js';
 
 const AuditLog = {
     getAll: () => {
@@ -9,4 +9,4 @@ const AuditLog = {
     }
 };
 
-module.exports = AuditLog;
+export default AuditLog;

@@ -1,7 +1,7 @@
-const CustomStyle = require('../models/customSylesModel');
+import CustomStyle from '../models/customSylesModel.js'; // Fixed typo in import
 
 // Get all custom styles
-exports.getAllCustomStyles = async (req, res) => {
+export const getAllCustomStyles = async (req, res) => {
     try {
         const [styles] = await CustomStyle.getAll();
         res.status(200).json(styles);
@@ -11,7 +11,7 @@ exports.getAllCustomStyles = async (req, res) => {
 };
 
 // Add a new custom style (Admin)
-exports.addCustomStyle = async (req, res) => {
+export const addCustomStyle = async (req, res) => {
     const { css_code, theme_id, page_id } = req.body;
     if (!css_code || !theme_id) {
         return res.status(400).json({ message: 'css_code and theme_id are required' });
@@ -25,7 +25,7 @@ exports.addCustomStyle = async (req, res) => {
 };
 
 // Update a custom style (Admin)
-exports.updateCustomStyle = async (req, res) => {
+export const updateCustomStyle = async (req, res) => {
     const { id } = req.params;
     const { css_code, theme_id, page_id } = req.body;
     if (!css_code || !theme_id) {
@@ -40,7 +40,7 @@ exports.updateCustomStyle = async (req, res) => {
 };
 
 // Delete a custom style (Admin)
-exports.deleteCustomStyle = async (req, res) => {
+export const deleteCustomStyle = async (req, res) => {
     const { id } = req.params;
     try {
         await CustomStyle.delete(id);
@@ -49,3 +49,10 @@ exports.deleteCustomStyle = async (req, res) => {
         res.status(500).json({ message: 'Error deleting custom style' });
     }
 };
+
+export default {
+    getAllCustomStyles,
+    addCustomStyle,
+    updateCustomStyle,
+    deleteCustomStyle
+}

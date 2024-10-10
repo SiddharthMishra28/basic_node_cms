@@ -1,8 +1,7 @@
-// controllers/themeController.js
-const Theme = require('../models/themeModel');
+import Theme from '../models/themeModel.js';
 
 // Get a list of themes
-exports.getThemes = async (req, res) => {
+export const getThemes = async (req, res) => {
     try {
         const themes = await Theme.getAll();
         res.status(200).json(themes);
@@ -13,7 +12,7 @@ exports.getThemes = async (req, res) => {
 };
 
 // Create a new theme
-exports.createTheme = async (req, res) => {
+export const createTheme = async (req, res) => {
     const { theme_name, primary_color, secondary_color, font_family, font_size } = req.body;
 
     if (!theme_name) {
@@ -36,7 +35,7 @@ exports.createTheme = async (req, res) => {
 };
 
 // Update an existing theme
-exports.updateTheme = async (req, res) => {
+export const updateTheme = async (req, res) => {
     const { id } = req.params;
     const { theme_name, primary_color, secondary_color, font_family, font_size } = req.body;
 
@@ -65,7 +64,7 @@ exports.updateTheme = async (req, res) => {
 };
 
 // Delete a theme
-exports.deleteTheme = async (req, res) => {
+export const deleteTheme = async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -81,7 +80,7 @@ exports.deleteTheme = async (req, res) => {
 };
 
 // Change the status of a theme (active/inactive)
-exports.changeThemeStatus = async (req, res) => {
+export const changeThemeStatus = async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 

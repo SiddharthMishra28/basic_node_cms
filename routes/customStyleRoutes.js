@@ -1,8 +1,9 @@
-const express = require('express');
+import express from 'express';
+import customStyleController from '../controllers/customStyleController.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
+import roleMiddleware from '../middlewares/roleMiddleware.js';
+
 const router = express.Router();
-const customStyleController = require('../controllers/customStyleController');
-const authMiddleware = require('../middlewares/authMiddleware');
-const roleMiddleware = require('../middlewares/roleMiddleware');
 
 /**
  * @swagger
@@ -130,4 +131,4 @@ router.put('/custom-styles/:id', authMiddleware, roleMiddleware('admin'), custom
  */
 router.delete('/custom-styles/:id', authMiddleware, roleMiddleware('admin'), customStyleController.deleteCustomStyle);
 
-module.exports = router;
+export default router;

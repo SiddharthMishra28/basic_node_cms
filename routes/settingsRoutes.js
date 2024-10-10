@@ -1,8 +1,8 @@
-// routes/settingsRoutes.js
-const express = require('express');
-const { getAllSettings, updateSettingByKey, createSetting } = require('../controllers/settingsController');
-const authMiddleware = require('../middlewares/authMiddleware');
-const roleMiddleware = require('../middlewares/roleMiddleware');
+import express from 'express';
+import { getAllSettings, updateSettingByKey, createSetting } from '../controllers/settingsController.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
+import roleMiddleware from '../middlewares/roleMiddleware.js';
+
 const router = express.Router();
 
 /**
@@ -105,4 +105,4 @@ router.put('/settings/:key', authMiddleware, roleMiddleware(['admin']), updateSe
  */
 router.post('/settings', authMiddleware, roleMiddleware(['admin']), createSetting);
 
-module.exports = router;
+export default router;

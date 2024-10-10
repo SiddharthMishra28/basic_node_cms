@@ -1,11 +1,11 @@
-const renderService = require('../services/renderService');
+import renderService from '../services/renderService.js';
 
 // Controller to handle the request and send the response
-exports.renderPage = async (req, res) => {
+export const renderPage = async (req, res) => {
   const { pageId } = req.params;
 
   try {
-    const pageData = await renderService.getPageDataForRendering(pageId);
+    const pageData = await renderService(pageId);
     res.status(200).json({
       success: true,
       data: pageData
@@ -17,3 +17,5 @@ exports.renderPage = async (req, res) => {
     });
   }
 };
+
+export default renderPage;

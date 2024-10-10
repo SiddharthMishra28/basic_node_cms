@@ -1,4 +1,4 @@
-const db = require('../config/db'); // Adjust path as necessary
+import db from '../config/db.js'; // Adjust path as necessary
 
 const mediaModel = {
     create: async (data) => {
@@ -25,4 +25,4 @@ const mediaModel = {
     },
 };
 
-module.exports = mediaModel;
+export default mediaModel;

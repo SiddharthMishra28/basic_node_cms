@@ -1,9 +1,7 @@
-// cms-api/controllers/sectionController.js
-
-const sectionService = require('../services/sectionService');
+import sectionService from '../services/sectionService.js';
 
 // Get all sections for a specific page
-const getSections = async (req, res) => {
+export const getSections = async (req, res) => {
     try {
         const { pageId } = req.params;
         const sections = await sectionService.getSectionsByPageId(pageId);
@@ -14,7 +12,7 @@ const getSections = async (req, res) => {
 };
 
 // Create a new section
-const createSection = async (req, res) => {
+export const createSection = async (req, res) => {
     try {
         const { pageId } = req.params;
         const sectionData = { ...req.body, page_id: pageId }; // Include pageId
@@ -26,7 +24,7 @@ const createSection = async (req, res) => {
 };
 
 // Update a section by ID
-const updateSection = async (req, res) => {
+export const updateSection = async (req, res) => {
     try {
         const { id } = req.params;
         await sectionService.updateSection(id, req.body);
@@ -37,7 +35,7 @@ const updateSection = async (req, res) => {
 };
 
 // Delete a section by ID
-const deleteSection = async (req, res) => {
+export const deleteSection = async (req, res) => {
     try {
         const { id } = req.params;
         await sectionService.deleteSection(id);
@@ -47,10 +45,9 @@ const deleteSection = async (req, res) => {
     }
 };
 
-// Export the functions
-module.exports = {
+export default {
     getSections,
     createSection,
     updateSection,
     deleteSection
-};
+}

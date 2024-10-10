@@ -1,8 +1,9 @@
-const mediaService = require('../services/mediaService');
-const path = require('path');
-const fs = require('fs');
+import mediaService from '../services/mediaService.js';
+import path from 'path';
+import fs from 'fs';
 
-const uploadMedia = async (req, res) => {
+// Upload media
+export const uploadMedia = async (req, res) => {
     try {
         const { section_id, page_id, description } = req.body;
         const file = req.file;
@@ -14,7 +15,7 @@ const uploadMedia = async (req, res) => {
         // Extracting the file extension and ensuring a unique file name
         const extension = path.extname(file.originalname);
         const fileName = `${Date.now()}${extension}`; // Use a timestamp to avoid name clashes
-        const uploadPath = path.join(__dirname, '../public/uploads/', fileName);
+        const uploadPath = path.join(process.cwd(), 'public/uploads/', fileName); // Changed to process.cwd() for better path resolution
 
         // Move the uploaded file to the specified directory
         fs.renameSync(file.path, uploadPath);
@@ -38,7 +39,8 @@ const uploadMedia = async (req, res) => {
     }
 };
 
-const getAllMedia = async (req, res) => {
+// Get all media
+export const getAllMedia = async (req, res) => {
     try {
         const mediaList = await mediaService.getAllMedia();
         return res.status(200).json(mediaList);
@@ -48,7 +50,8 @@ const getAllMedia = async (req, res) => {
     }
 };
 
-const getMediaById = async (req, res) => {
+// Get media by ID
+export const getMediaById = async (req, res) => {
     const { id } = req.params;
     try {
         const media = await mediaService.getMediaById(id);
@@ -59,7 +62,8 @@ const getMediaById = async (req, res) => {
     }
 };
 
-const deleteMedia = async (req, res) => {
+// Delete media
+export const deleteMedia = async (req, res) => {
     const { id } = req.params;
     try {
         await mediaService.deleteMedia(id);
@@ -70,9 +74,9 @@ const deleteMedia = async (req, res) => {
     }
 };
 
-module.exports = {
+export default {
     uploadMedia,
     getAllMedia,
     getMediaById,
-    deleteMedia,
-};
+    deleteMedia
+}

@@ -1,10 +1,9 @@
-// cms-api/routes/sectionRoutes.js
+import express from 'express';
+import sectionController from '../controllers/sectionController.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
+import roleMiddleware from '../middlewares/roleMiddleware.js';
 
-const express = require('express');
 const router = express.Router();
-const sectionController = require('../controllers/sectionController');
-const authMiddleware = require('../middlewares/authMiddleware');
-const roleMiddleware = require('../middlewares/roleMiddleware');
 
 /**
  * @swagger
@@ -157,4 +156,4 @@ router.put('/pages/:pageId/sections/:id', authMiddleware, roleMiddleware(['admin
  */
 router.delete('/pages/:pageId/sections/:id', authMiddleware, roleMiddleware(['admin', 'editor']), sectionController.deleteSection);
 
-module.exports = router;
+export default router;

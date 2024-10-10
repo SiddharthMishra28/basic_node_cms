@@ -1,7 +1,7 @@
-const db = require('../config/db');
-const logger = require('../config/logger');
+import db from '../config/db.js';
+import logger from '../config/logger.js';
 
-exports.getUsers = async (req, res) => {
+export const getUsers = async (req, res) => {
     try {
         const [users] = await db.execute('SELECT user_id, username, email, role, created_at FROM users');
         res.json(users);
@@ -11,7 +11,7 @@ exports.getUsers = async (req, res) => {
     }
 };
 
-exports.getUserById = async (req, res) => {
+export const getUserById = async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -26,7 +26,7 @@ exports.getUserById = async (req, res) => {
     }
 };
 
-exports.updateUser = async (req, res) => {
+export const updateUser = async (req, res) => {
     const { id } = req.params;
     const { username, email, role } = req.body;
 
@@ -45,7 +45,7 @@ exports.updateUser = async (req, res) => {
     }
 };
 
-exports.deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
     const { id } = req.params;
 
     try {

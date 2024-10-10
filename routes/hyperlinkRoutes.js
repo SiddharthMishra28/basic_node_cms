@@ -1,8 +1,9 @@
-const express = require('express');
+import express from 'express';
+import { getAllHyperlinks, createHyperlink, deleteHyperlink } from '../controllers/hyperlinkController.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
+import roleMiddleware from '../middlewares/roleMiddleware.js';
+
 const router = express.Router();
-const { getAllHyperlinks, createHyperlink, deleteHyperlink } = require('../controllers/hyperlinkController');
-const authMiddleware = require('../middlewares/authMiddleware');
-const roleMiddleware = require('../middlewares/roleMiddleware');
 
 /**
  * @swagger
@@ -108,4 +109,4 @@ router.post('/pages/:pageId/sections/:sectionId/links', authMiddleware, roleMidd
  */
 router.delete('/pages/:pageId/sections/:sectionId/links/:linkId', authMiddleware, roleMiddleware(['admin']), deleteHyperlink);
 
-module.exports = router;
+export default router;

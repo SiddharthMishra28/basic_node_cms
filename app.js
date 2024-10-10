@@ -1,21 +1,20 @@
-// app.js
-const express = require('express');
-const swaggerJsDoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
-const authRoutes = require('./routes/authRoutes');
-const userRoutes = require('./routes/userRoutes');
-const themeRoutes = require('./routes/themeRoutes');
-const pageRoutes = require('./routes/pageRoutes');
-const sectionRoutes = require('./routes/sectionRoutes');
-const mediaRoutes = require('./routes/mediaRoutes'); 
-const menuRoutes = require('./routes/menuRoutes');
-const settingsRoutes = require('./routes/settingsRoutes');
-const customStyleRoutes = require('./routes/customStyleRoutes');
-const formRoutes = require('./routes/formRoutes');
-const hyperlinkRoutes = require('./routes/hyperlinkRoutes');
-const auditLogRoutes = require('./routes/auditLogRoutes');
-const renderRoutes = require('./routes/renderRoutes');
-const logger = require('./config/logger');
+import express from 'express';
+import swaggerJsDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import themeRoutes from './routes/themeRoutes.js';
+import pageRoutes from './routes/pageRoutes.js';
+import sectionRoutes from './routes/sectionRoutes.js';
+import mediaRoutes from './routes/mediaRoutes.js'; 
+import menuRoutes from './routes/menuRoutes.js';
+import settingsRoutes from './routes/settingsRoutes.js';
+import customStyleRoutes from './routes/customStyleRoutes.js';
+import formRoutes from './routes/formRoutes.js';
+import hyperlinkRoutes from './routes/hyperlinkRoutes.js';
+import auditLogRoutes from './routes/auditLogRoutes.js';
+import renderRoutes from './routes/renderRoutes.js';
+import logger from './config/logger.js';
 
 const app = express();
 app.use(express.json());
@@ -25,9 +24,9 @@ const swaggerOptions = {
     swaggerDefinition: {
         openapi: '3.0.0',
         info: {
-            title: 'Corporate Company Website CMS API',
+            title: 'WEB CMS API',
             version: '1.0.0',
-            description: 'API documentation for the Corporate Company Website CMS',
+            description: 'API documentation for the Website CMS',
         },
         servers: [
             {

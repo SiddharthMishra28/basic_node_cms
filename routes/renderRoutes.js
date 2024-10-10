@@ -1,6 +1,7 @@
-const express = require('express');
+import express from 'express';
+import renderController from '../controllers/renderController.js';
+
 const router = express.Router();
-const renderController = require('../controllers/renderController');
 
 /**
  * @swagger
@@ -130,6 +131,6 @@ const renderController = require('../controllers/renderController');
  *       500:
  *         description: Internal Server Error
  */
-router.get('/pages/:pageId/render', renderController.renderPage);
+router.get('/pages/:pageId/render', renderController);
 
-module.exports = router;
+export default router;

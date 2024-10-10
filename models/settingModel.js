@@ -1,5 +1,4 @@
-// models/settingModel.js
-const db = require('../config/db');
+import db from '../config/db.js';
 
 const Setting = {
     getAll: async () => {
@@ -19,4 +18,4 @@ const Setting = {
     }
 };
 
-module.exports = Setting;
+export default Setting;

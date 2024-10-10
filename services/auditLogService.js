@@ -1,11 +1,11 @@
-const AuditLog = require('../models/auditLogModel');
+import AuditLog from '../models/auditLogModel.js';
 
-const getAllAuditLogs = async () => {
+export const getAllAuditLogs = async () => {
     const [logs] = await AuditLog.getAll();
     return logs;
 };
 
-const getAuditLogById = async (logId) => {
+export const getAuditLogById = async (logId) => {
     const [log] = await AuditLog.getById(logId);
     if (log.length === 0) {
         throw new Error(`Audit log with ID ${logId} not found`);
@@ -13,7 +13,7 @@ const getAuditLogById = async (logId) => {
     return log[0];
 };
 
-module.exports = {
+export default {
     getAllAuditLogs,
     getAuditLogById
-};
+}

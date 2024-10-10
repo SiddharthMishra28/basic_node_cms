@@ -1,8 +1,8 @@
-const express = require('express');
-const multer = require('multer');
-const mediaController = require('../controllers/mediaController');
-const authMiddleware = require('../middlewares/authMiddleware');
-const roleMiddleware = require('../middlewares/roleMiddleware');
+import express from 'express';
+import multer from 'multer';
+import mediaController from '../controllers/mediaController.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
+import roleMiddleware from '../middlewares/roleMiddleware.js';
 
 const router = express.Router();
 const upload = multer({ dest: 'public/uploads/' }); // Set the destination for uploads
@@ -120,4 +120,4 @@ router.post('/media/upload', authMiddleware, roleMiddleware(['admin', 'editor'])
  */
 router.delete('/media/:id', authMiddleware, roleMiddleware(['admin']), mediaController.deleteMedia);
 
-module.exports = router;
+export default router;

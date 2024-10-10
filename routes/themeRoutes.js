@@ -1,14 +1,13 @@
-// routes/themeRoutes.js
-const express = require('express');
-const {
+import express from 'express';
+import {
     getThemes,
     createTheme,
     updateTheme,
     deleteTheme,
     changeThemeStatus,
-} = require('../controllers/themeController');
-const authMiddleware = require('../middlewares/authMiddleware');
-const roleMiddleware = require('../middlewares/roleMiddleware');
+} from '../controllers/themeController.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
+import roleMiddleware from '../middlewares/roleMiddleware.js';
 
 const router = express.Router();
 
@@ -157,4 +156,4 @@ router.delete('/themes/:id', authMiddleware, roleMiddleware(['admin']), deleteTh
  */
 router.patch('/themes/:id/status', authMiddleware, roleMiddleware(['admin']), changeThemeStatus);
 
-module.exports = router;
+export default router;

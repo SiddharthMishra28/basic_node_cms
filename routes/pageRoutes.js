@@ -1,8 +1,9 @@
-const express = require('express');
+import express from 'express';
+import PageController from '../controllers/pageController.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
+import roleMiddleware from '../middlewares/roleMiddleware.js';
+
 const router = express.Router();
-const PageController = require('../controllers/pageController');
-const authMiddleware = require('../middlewares/authMiddleware');
-const roleMiddleware = require('../middlewares/roleMiddleware');
 
 /**
  * @swagger
@@ -214,4 +215,4 @@ router.put('/pages/:id', authMiddleware, roleMiddleware(['admin', 'editor']), Pa
  */
 router.delete('/pages/:id', authMiddleware, roleMiddleware(['admin']), PageController.deletePage);
 
-module.exports = router;
+export default router;

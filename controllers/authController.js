@@ -1,9 +1,9 @@
-const db = require('../config/db');
-const bcrypt = require('bcryptjs');
-const { generateToken } = require('../config/auth');
-const logger = require('../config/logger');
+import db from '../config/db.js';
+import bcrypt from 'bcryptjs';
+import { generateToken } from '../config/auth.js';
+import logger from '../config/logger.js';
 
-exports.register = async (req, res) => {
+export const register = async (req, res) => {
     const { username, password, email, role } = req.body;
     const passwordHash = await bcrypt.hash(password, 10);
 
@@ -19,7 +19,7 @@ exports.register = async (req, res) => {
     }
 };
 
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
     const { username, password } = req.body;
 
     try {

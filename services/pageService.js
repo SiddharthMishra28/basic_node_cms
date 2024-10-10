@@ -1,21 +1,21 @@
-const PageModel = require('../models/pageModel');
+import pageModel from '../models/pageModel.js';
 
-exports.getAllPages = async () => {
-    return await PageModel.getAll();
+const PageService = {
+    getAllPages: async () => {
+        return await pageModel.getAll();
+    },
+    getPageBySlug: async (slug) => {
+        return await pageModel.getBySlug(slug);
+    },
+    createPage: async (pageData) => {
+        return await pageModel.create(pageData);
+    },
+    updatePage: async (id, pageData) => {
+        return await pageModel.update(id, pageData);
+    },
+    deletePageById: async (id) => {
+        return await pageModel.deletePage(id);
+    }
 };
 
-exports.getPageBySlug = async (slug) => {
-    return await PageModel.getBySlug(slug);
-};
-
-exports.createPage = async (pageData) => {
-    return await PageModel.create(pageData);
-};
-
-exports.updatePage = async (id, pageData) => {
-    return await PageModel.update(id, pageData);
-};
-
-exports.deletePage = async (id) => {
-    return await PageModel.delete(id);
-};
+export default PageService;

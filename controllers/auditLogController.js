@@ -1,7 +1,7 @@
-const auditLogService = require('../services/auditLogService');
+import auditLogService from '../services/auditLogService.js';
 
 // GET all audit logs
-const getAllAuditLogs = async (req, res, next) => {
+export const getAllAuditLogs = async (req, res, next) => {
     try {
         const logs = await auditLogService.getAllAuditLogs();
         res.status(200).json(logs);
@@ -11,7 +11,7 @@ const getAllAuditLogs = async (req, res, next) => {
 };
 
 // GET a specific audit log by ID
-const getAuditLogById = async (req, res, next) => {
+export const getAuditLogById = async (req, res, next) => {
     try {
         const logId = req.params.id;
         const log = await auditLogService.getAuditLogById(logId);
@@ -21,7 +21,7 @@ const getAuditLogById = async (req, res, next) => {
     }
 };
 
-module.exports = {
+export default {
     getAllAuditLogs,
     getAuditLogById
-};
+}

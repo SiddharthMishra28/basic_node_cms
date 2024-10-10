@@ -1,4 +1,4 @@
-const db = require('../config/db');
+import db from '../config/db.js';
 
 // Custom Style Model
 const CustomStyle = {
@@ -25,4 +25,4 @@ const CustomStyle = {
     }
 };
 
-module.exports = CustomStyle;
+export default CustomStyle;

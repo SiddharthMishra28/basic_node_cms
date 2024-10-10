@@ -1,7 +1,7 @@
-const express = require('express');
-const menuController = require('../controllers/menuController');
-const authMiddleware = require('../middlewares/authMiddleware');
-const roleMiddleware = require('../middlewares/roleMiddleware');
+import express from 'express';
+import menuController from '../controllers/menuController.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
+import roleMiddleware from '../middlewares/roleMiddleware.js';
 
 const router = express.Router();
 
@@ -225,4 +225,4 @@ router.put('/menus/:menuId/items/:itemId', authMiddleware, roleMiddleware(['admi
  */
 router.delete('/menus/:menuId/items/:itemId', authMiddleware, roleMiddleware(['admin']), menuController.deleteMenuItem);
 
-module.exports = router;
+export default router;

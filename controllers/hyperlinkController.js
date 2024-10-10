@@ -1,7 +1,7 @@
-const hyperlinkService = require('../services/hyperlinkService');
+import hyperlinkService from '../services/hyperlinkService.js';
 
 // Get all hyperlinks for a section
-const getAllHyperlinks = async (req, res) => {
+export const getAllHyperlinks = async (req, res) => {
     const { sectionId } = req.params;
     try {
         const hyperlinks = await hyperlinkService.getAllHyperlinks(sectionId);
@@ -12,7 +12,7 @@ const getAllHyperlinks = async (req, res) => {
 };
 
 // Create a new hyperlink
-const createHyperlink = async (req, res) => {
+export const createHyperlink = async (req, res) => {
     const { pageId, sectionId } = req.params;
     const { label, url, target } = req.body;
     try {
@@ -24,7 +24,7 @@ const createHyperlink = async (req, res) => {
 };
 
 // Delete a hyperlink
-const deleteHyperlink = async (req, res) => {
+export const deleteHyperlink = async (req, res) => {
     const { linkId } = req.params;
     try {
         await hyperlinkService.deleteHyperlink(linkId);
@@ -34,8 +34,8 @@ const deleteHyperlink = async (req, res) => {
     }
 };
 
-module.exports = {
+export default {
     getAllHyperlinks,
     createHyperlink,
     deleteHyperlink
-};
+}
